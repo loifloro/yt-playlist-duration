@@ -64,16 +64,12 @@ async function getPlaylistID(url) {
   return getPlayListItems();
   // }
 
-  // let youtubeUrl = /[www.youtube.com/playlist?] | [www.youtum/playlist?] /g;
-  // console.log(!/[www.youtube.com/playlist?]/g.test(url));
-
-  // if (
-  //   // !url.match("https://www.youtube.com/playlist?") ||
-  //   // !url.match("https://www.youtum/playlist?")
-  //   !/[www.youtube.com/playlist?]/g.test(url)
-  // ) {
-  //   return showSearchError("Please input valid URL Link");
-  // }
+  if (
+    !url.match("https://www.youtube.com/playlist?") ||
+    !url.match("https://www.youtum/playlist?")
+  ) {
+    return showSearchError("Please input valid URL Link");
+  }
 }
 
 async function showThumbnail() {
