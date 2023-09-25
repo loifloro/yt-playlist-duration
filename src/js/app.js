@@ -4,10 +4,12 @@ const API_KEY = "AIzaSyDime4ODLCwiQPnDKcaY4pmhVv4KlZGKfY";
 
 const searchBtn = document.getElementById("searchBtn");
 let resultTime = document.getElementById("result-time");
-let url = document.getElementById("searchInput").value;
 const copyBtn = document.getElementById("copy-btn");
 const durationSpeed = document.getElementById("duration-speed");
 let loader = document.getElementById("loader");
+let searchBar = document.getElementById("searchInput");
+let url = searchBar.value;
+
 let resultSection = document.getElementById("result");
 let totalSeconds;
 
@@ -19,6 +21,10 @@ const timeDuration = {};
 
 searchBtn.addEventListener("click", () => {
   videoId = [];
+  searchBar.addEventListener("change", () => {
+    url = searchBar.value;
+    console.log(url);
+  });
   getPlaylistID(url);
 });
 
@@ -32,20 +38,30 @@ copyBtn.addEventListener("click", async () => {
 });
 
 function showSearchError(err) {
+  resultSection.classList.add("result--hidden");
+
   urlError.classList.remove("search__error--hidden");
   urlError.innerText = err;
+  return;
 }
 
 async function getPlaylistID(url) {
-  if (!url.match("https://www.youtube.com/playlist?")) {
-    return showSearchError("Please input valid URL Link");
-  }
-
   if (url.match("list=")) {
     playlistId = url.slice(url.indexOf("list=") + 5);
     urlError.classList.add("search__error--hidden");
+    if (url.match("&")) {
+      playlistId = playlistId.substring(0, playlistId.indexOf("&"));
+    }
+    console.log(playlistId);
     await showThumbnail();
     return getPlayListItems();
+  }
+
+  if (
+    !url.match("https://www.youtube.com/playlist?") ||
+    !url.match("https://www.youtum/playlist?")
+  ) {
+    return showSearchError("Please input valid URL Link");
   }
 }
 
@@ -55,6 +71,12 @@ async function showThumbnail() {
 
   loader.classList.remove("loader--hidden");
   resultSection.classList.add("result--hidden");
+
+  resultBtn = document.getElementById("resultBtn");
+
+  resultBtn.addEventListener("click", () => {
+    window.open(url, "_blank");
+  });
 
   let info = document.querySelectorAll(".info");
   info.forEach((item) => {
@@ -68,16 +90,12 @@ async function showThumbnail() {
     .then((data) => {
       resultThumbnail.src = data.items[0].snippet.thumbnails.standard.url;
       resultTitle.innerText = data.items[0].snippet.title;
-      resultBtn = document.getElementById("resultBtn");
-
-      resultBtn.addEventListener("click", () => {
-        window.open(url, "_blank");
-      });
 
       return;
     })
     .catch((error) => {
       console.log(error);
+      return showSearchError("Invalid URL");
     });
 }
 
