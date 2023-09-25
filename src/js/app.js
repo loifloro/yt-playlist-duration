@@ -39,6 +39,11 @@ copyBtn.addEventListener("click", async () => {
 
 function showSearchError(err) {
   resultSection.classList.add("result--hidden");
+  loader.classList.add("loader--hidden");
+  let info = document.querySelectorAll(".info");
+  info.forEach((item) => {
+    item.classList.remove("info--hidden");
+  });
 
   urlError.classList.remove("search__error--hidden");
   urlError.innerText = err;
@@ -46,23 +51,29 @@ function showSearchError(err) {
 }
 
 async function getPlaylistID(url) {
-  if (url.match("list=")) {
-    playlistId = url.slice(url.indexOf("list=") + 5);
-    urlError.classList.add("search__error--hidden");
-    if (url.match("&")) {
-      playlistId = playlistId.substring(0, playlistId.indexOf("&"));
-    }
-    console.log(playlistId);
-    await showThumbnail();
-    return getPlayListItems();
-  }
+  // let playlist = /[playlist?list=]/gi;
+  // console.log(url.match(playlist));
+  // if (playlist.test(url)) {
+  //   playlistId = url.slice(url.indexOf("list=") + 5);
+  //   urlError.classList.add("search__error--hidden");
+  //   if (url.match("&")) {
+  //     playlistId = playlistId.substring(0, playlistId.indexOf("&"));
+  //   }
+  //   console.log(playlistId);
+  await showThumbnail();
+  return getPlayListItems();
+  // }
 
-  if (
-    !url.match("https://www.youtube.com/playlist?") ||
-    !url.match("https://www.youtum/playlist?")
-  ) {
-    return showSearchError("Please input valid URL Link");
-  }
+  // let youtubeUrl = /[www.youtube.com/playlist?] | [www.youtum/playlist?] /g;
+  // console.log(!/[www.youtube.com/playlist?]/g.test(url));
+
+  // if (
+  //   // !url.match("https://www.youtube.com/playlist?") ||
+  //   // !url.match("https://www.youtum/playlist?")
+  //   !/[www.youtube.com/playlist?]/g.test(url)
+  // ) {
+  //   return showSearchError("Please input valid URL Link");
+  // }
 }
 
 async function showThumbnail() {
@@ -95,7 +106,7 @@ async function showThumbnail() {
     })
     .catch((error) => {
       console.log(error);
-      return showSearchError("Invalid URL");
+      return showSearchError("Please input valid URL");
     });
 }
 
