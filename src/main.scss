@@ -498,6 +498,10 @@ option {
   column-gap: 1rem;
   border-top: 1px $gray2 solid;
   padding-block: 1rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  align-self: end;
 
   &__credits {
     color: $gray2;
