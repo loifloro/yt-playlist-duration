@@ -51,25 +51,19 @@ function showSearchError(err) {
 }
 
 async function getPlaylistID(url) {
-  // let playlist = /[playlist?list=]/gi;
-  // console.log(url.match(playlist));
-  // if (playlist.test(url)) {
-  playlistId = url.slice(url.indexOf("list=") + 5);
+  try {
+    playlistId = url.slice(url.indexOf("list=") + 5);
+    if (playlistId.match("&")) {
+      playlistId = playlistId.substring(0, playlistId.indexOf("&"));
+    }
+  } catch (error) {
+    console.log(error);
+    showSearchError("Try");
+  }
+
   urlError.classList.add("search__error--hidden");
-  //   if (url.match("&")) {
-  //     playlistId = playlistId.substring(0, playlistId.indexOf("&"));
-  //   }
-  //   console.log(playlistId);
   await showThumbnail();
   return getPlayListItems();
-  // }
-
-  if (
-    !url.match("https://www.youtube.com/playlist?") ||
-    !url.match("https://www.youtum/playlist?")
-  ) {
-    return showSearchError("Please input valid URL Link");
-  }
 }
 
 async function showThumbnail() {
@@ -113,7 +107,7 @@ async function getPlayListItems(pageToken = "") {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.items.length == 0) {
         return showSearchError("No Video Found");
       }
@@ -139,6 +133,11 @@ async function getPlayListItems(pageToken = "") {
 // Get all video duration in PTDHMS format and push to durationList[]
 async function getVideoDuration(videoIdList) {
   const durationList = [];
+  timeDuration.day = 0;
+  timeDuration.hour = 0;
+  timeDuration.minute = 0;
+  timeDuration.seconds = 0;
+
   for (let k = 0; k < videoIdList.length; k++) {
     durationList.push(
       await fetch(
@@ -148,6 +147,48 @@ async function getVideoDuration(videoIdList) {
         .then((data) => {
           if (data.items[0] != undefined) {
             let duration = data.items[0].contentDetails.duration;
+            if (duration.indexOf("D") != -1) {
+              timeDuration.day = Number(
+                duration.slice(duration.indexOf("P") + 1, duration.indexOf("D"))
+              );
+              timeDuration.hour = Number(
+                duration.slice(duration.indexOf("T") + 1, duration.indexOf("H"))
+              );
+              timeDuration.minute = Number(
+                duration.slice(duration.indexOf("H") + 1, duration.indexOf("M"))
+              );
+              timeDuration.seconds = Number(
+                duration.slice(duration.indexOf("M") + 1, duration.indexOf("S"))
+              );
+            } else if (duration.indexOf("H") != -1) {
+              timeDuration.hour = Number(
+                duration.slice(duration.indexOf("T") + 1, duration.indexOf("H"))
+              );
+              timeDuration.minute = Number(
+                duration.slice(duration.indexOf("H") + 1, duration.indexOf("M"))
+              );
+              timeDuration.seconds = Number(
+                duration.slice(duration.indexOf("M") + 1, duration.indexOf("S"))
+              );
+            } else if (duration.indexOf("M") != -1) {
+              timeDuration.minute = Number(
+                duration.slice(duration.indexOf("T") + 1, duration.indexOf("M"))
+              );
+              timeDuration.seconds = Number(
+                duration.slice(duration.indexOf("M") + 1, duration.indexOf("S"))
+              );
+            } else if (duration.indexOf("S") != -1) {
+              timeDuration.seconds = Number(
+                duration.slice(duration.indexOf("T") + 1, duration.indexOf("S"))
+              );
+            }
+
+            duration =
+              timeDuration.day * 86400 +
+              timeDuration.hour * 3600 +
+              timeDuration.minute * 60 +
+              timeDuration.seconds;
+
             return duration;
           } else {
             return 0;
@@ -160,90 +201,6 @@ async function getVideoDuration(videoIdList) {
 }
 
 function computeTotal(durationList) {
-  console.log(durationList);
-
-  timeDuration.day = 0;
-  timeDuration.hour = 0;
-  timeDuration.minute = 0;
-  timeDuration.seconds = 0;
-
-  for (let l = 0; l < durationList.length; l++) {
-    if (typeof durationList[l] == "string") {
-      if (durationList[l].indexOf("D") != -1) {
-        timeDuration.day = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("P") + 1,
-            durationList[l].indexOf("D")
-          )
-        );
-        timeDuration.hour = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("T") + 1,
-            durationList[l].indexOf("H")
-          )
-        );
-        timeDuration.minute = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("H") + 1,
-            durationList[l].indexOf("M")
-          )
-        );
-        timeDuration.seconds = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("M") + 1,
-            durationList[l].indexOf("S")
-          )
-        );
-      } else if (durationList[l].indexOf("H") != -1) {
-        timeDuration.hour = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("T") + 1,
-            durationList[l].indexOf("H")
-          )
-        );
-        timeDuration.minute = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("H") + 1,
-            durationList[l].indexOf("M")
-          )
-        );
-        timeDuration.seconds = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("M") + 1,
-            durationList[l].indexOf("S")
-          )
-        );
-      } else if (durationList[l].indexOf("M") != -1) {
-        timeDuration.minute = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("T") + 1,
-            durationList[l].indexOf("M")
-          )
-        );
-        timeDuration.seconds = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("M") + 1,
-            durationList[l].indexOf("S")
-          )
-        );
-      } else if (durationList[l].indexOf("S") != -1) {
-        timeDuration.seconds = Number(
-          durationList[l].slice(
-            durationList[l].indexOf("T") + 1,
-            durationList[l].indexOf("S")
-          )
-        );
-      }
-
-      let total =
-        timeDuration.day * 86400 +
-        timeDuration.hour * 3600 +
-        timeDuration.minute * 60 +
-        timeDuration.seconds;
-
-      durationList[l] = total;
-    }
-  }
   totalSeconds = 0;
   durationList.forEach((num) => {
     totalSeconds += num;
@@ -308,5 +265,3 @@ durationSpeed.addEventListener("change", () => {
   temp *= durationSpeed.value;
   showTotal(temp);
 });
-
-// getPlayListItems();
