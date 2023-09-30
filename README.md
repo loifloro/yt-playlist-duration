@@ -2,6 +2,8 @@
 
 This app calculates the total length of a YouTube Playlist. The result can also be translated to other speed options.
 
+![Project Thumbnail](https://raw.githubusercontent.com/loifloro/yt-playlist-duration/main/src/images/project-thumbnail.png)
+
 ## How to use
 
 Copy a YouTube playlist URL and paste on the search input.
