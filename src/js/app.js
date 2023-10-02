@@ -20,11 +20,11 @@ let playlistId = "";
 const timeDuration = {};
 
 searchBtn.addEventListener("click", () => {
-  videoId = [];
-  searchBar.addEventListener("change", () => {
-    url = searchBar.value;
-    console.log(url);
-  });
+  getPlaylistID(url);
+});
+
+searchBar.addEventListener("change", () => {
+  url = searchBar.value;
   getPlaylistID(url);
 });
 
