@@ -42,3 +42,6 @@ export default async function calculatePlaylistLength(
         ),
     };
 }
+
+// https://www.youtube.com/watch?v=_GwFUr5VBxo&list=PL2ZSC63lrokkacGXp590GdImBgRDS8Bib
+// https://youtube.com/playlist?list=PLSHv_e8U7Z-16Ikm3A8eYTF4jhQ_xgXBg&si=eESLadQk96SNHQdO

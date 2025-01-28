@@ -14,7 +14,7 @@ export function getPlaylistId(url: FormDataEntryValue | null): string | null {
         return null;
     }
 
-    if (!isEqual(_url.hostname, "www.youtube.com")) {
+    if (!isEqual(_url.hostname.replace(/^www\./, ""), "youtube.com")) {
         return null;
     }
 
