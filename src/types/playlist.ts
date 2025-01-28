@@ -1,3 +1,15 @@
+export type PlaylistListResponse = {
+    kind: "youtube#playlistListResponse";
+    etag: string;
+    nextPageToken: string;
+    prevPageToken: string;
+    pageInfo: {
+        totalResults: number;
+        resultsPerPage: number;
+    };
+    items: Playlist[];
+};
+
 export type Playlist = {
     kind: "youtube#playlist";
     etag: string;
