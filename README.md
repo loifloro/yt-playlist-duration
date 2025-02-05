@@ -1,56 +1,50 @@
-# Youtube Playlist Duration Calculator
+# React + TypeScript + Vite
 
-This app calculates the total length of a YouTube Playlist. The result can also be translated to other speed options.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-![Project Thumbnail](https://raw.githubusercontent.com/loifloro/yt-playlist-duration/main/src/images/project-thumbnail.png)
+Currently, two official plugins are available:
 
-## How to use
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Copy a YouTube playlist URL and paste on the search input.
+## Expanding the ESLint configuration
 
-## Tech Stack
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-**Client:** Vanilla JS, SASS, CSS, Normalize.css
+- Configure the top-level `parserOptions` property like this:
 
-**Server:** Netlify, Webpack
-
-## Lessons Learned
-
-In this project I have use Fetch API to get the API response.
-
-I have also learned how to use Asynchronous functions.
-
-```javascript
-async function getPlayListItems(pageToken = "") {
-  await fetch(
-    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${playlistId}&maxResults=50&pageToken=${pageToken}&key=${API_KEY}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      if (data.items.length == 0) {
-        return showSearchError("No Video Found");
-      }
-
-      for (let i = 0; i < data.items.length; i++) {
-        videoId.push(data.items[i].contentDetails.videoId);
-      }
-
-      if (data.hasOwnProperty("nextPageToken")) {
-        return getPlayListItems(data.nextPageToken);
-      } else {
-        let resultTotalVid = document.getElementById("resultTotalVid");
-        resultTotalVid.innerText = data.pageInfo.totalResults;
-
-        return getVideoDuration(videoId);
-      }
-    })
-    .catch((error) => {
-      console.log("Error:", error);
-    });
-}
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
 
-## Feedback
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-I know that there is much needed optimization for this small application. Specially on the runtime speed. If you have any suggestions, feel free to email me jlois.floro@gmail.com
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
+
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
