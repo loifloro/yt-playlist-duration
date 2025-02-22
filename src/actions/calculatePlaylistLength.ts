@@ -33,8 +33,11 @@ export default async function calculatePlaylistLength(
         return null;
     }
 
+    console.log(playlist);
+
     return {
         playlist,
+        imgUrl: playlist.snippet.thumbnails["maxres"].url,
         totalLength: getPlaylistDuration(
             await getVideoDetails(
                 getVideoIds(await getPlaylistItems(playlistId))
@@ -42,6 +45,3 @@ export default async function calculatePlaylistLength(
         ),
     };
 }
-
-// https://www.youtube.com/watch?v=_GwFUr5VBxo&list=PL2ZSC63lrokkacGXp590GdImBgRDS8Bib
-// https://youtube.com/playlist?list=PLSHv_e8U7Z-16Ikm3A8eYTF4jhQ_xgXBg&si=eESLadQk96SNHQdO
