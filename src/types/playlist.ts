@@ -20,7 +20,7 @@ export type Playlist = {
         title: string;
         description: string;
         thumbnails: {
-            (key: number): {
+            [key: string]: {
                 url: string;
                 width: number;
                 height: number;
