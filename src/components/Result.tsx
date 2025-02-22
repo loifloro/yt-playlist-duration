@@ -24,7 +24,9 @@ export default function Result({
                 />
                 <div>
                     <h2 className="text-xl font-semibold mb-2">{length}</h2>
-                    <h3 className="text-md/7">{title}</h3>
+                    <h3 className="text-md/7 max-w-10/12 text-pretty">
+                        {title}
+                    </h3>
                     <p>{description}</p>
                 </div>
             </div>
