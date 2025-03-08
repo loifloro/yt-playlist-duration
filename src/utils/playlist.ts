@@ -1,5 +1,5 @@
 import { Duration } from "luxon";
-import { isEmpty, isEqual, isNull, isUndefined } from "lodash";
+import { isEmpty, isEqual, isNaN, isNull, isUndefined } from "lodash";
 import {
     PlaylistItem,
     PlaylistItems,
@@ -99,7 +99,9 @@ export function getPlaylistDuration(videos: Video[]) {
     );
 
     return Duration.fromDurationLike(
-        videoDurations.reduce((acc, duration) => acc + duration)
+        videoDurations
+            .filter((item) => !isNaN(item))
+            .reduce((acc, duration) => acc + duration)
     )
         .rescale()
         .toHuman();
