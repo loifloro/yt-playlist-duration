@@ -13,21 +13,25 @@ export default function Result({
 }: ResultProps) {
     return (
         <div
-            className="my-5 md:my-10 rounded-lg overflow-hidden h-fit w-fit"
+            className="my-5 md:my-10 rounded-lg md:rounded-xl overflow-hidden h-fit w-fit"
             style={{ backgroundImage: `url(${imgUrl})` }}
         >
-            <div className="px-4 py-5 backdrop-blur-3xl  flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="md:w-[110%] p-4 pb-8 md:p-8 backdrop-blur-xl bg-black/60 flex flex-wrap flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
                 <img
                     src={imgUrl}
                     alt={description}
-                    className="rounded-md sm:w-80"
+                    className="drop-shadow-lg object-cover md:w-80"
                 />
-                <div>
-                    <h2 className="text-xl font-semibold mb-2">{length}</h2>
-                    <h3 className="text-md/7 max-w-10/12 text-pretty">
-                        {title}
-                    </h3>
-                    <p>{description}</p>
+                <div className="flex flex-col gap-6 md:gap-10">
+                    <h2 className="text-xl md:text-2xl font-medium mb-2">
+                        {length}
+                    </h2>
+                    <div className="flex flex-col gap-1">
+                        <h3 className="text-sm md:text-lg text-pretty">
+                            {title}
+                        </h3>
+                        <p className="text-xs">{description}</p>
+                    </div>
                 </div>
             </div>
         </div>
