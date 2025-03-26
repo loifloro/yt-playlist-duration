@@ -18,7 +18,7 @@ export default function App() {
                 </div>
             </header>
             <main className="grid place-content-center p-4">
-                <div className="my-[20vh]">
+                <div className="mb-[15vh]">
                     <h1 className="text-[1.75rem] leading-[1.3] md:text-[2.75rem] md:leading-[1.2] mb-12 text-transparent bg-clip-text bg-gradient-to-r from-white via-red-600 to-red-500">
                         Hi there, binge-watcher <br />
                         What playlist you want to calculate?
