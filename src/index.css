@@ -3,4 +3,5 @@
 
 body {
     font-family: "Geist", Roboto, Arial, sans-serif;
+    background-color: var(--color-neutral-950);
 }

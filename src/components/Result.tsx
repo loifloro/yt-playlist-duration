@@ -13,10 +13,10 @@ export default function Result({
 }: ResultProps) {
     return (
         <div
-            className="my-5 md:my-10 rounded-lg md:rounded-xl overflow-hidden h-fit w-fit lg:max-w-4xl"
+            className="my-5 md:my-10 rounded-xl md:rounded-xl overflow-hidden h-fit w-fit lg:max-w-4xl"
             style={{ backgroundImage: `url(${imgUrl})` }}
         >
-            <div className="p-4 pb-8 md:p-8 backdrop-blur-xl bg-black/60 flex flex-wrap md:flex-nowrap flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+            <div className="p-4 pb-8 md:p-6 backdrop-blur-xl bg-black/60 flex flex-wrap md:flex-nowrap flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
                 <img
                     src={imgUrl}
                     alt={description}

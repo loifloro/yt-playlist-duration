@@ -4,7 +4,7 @@ import Logo from "./components/Logo";
 
 export default function App() {
     return (
-        <div className="min-h-screen bg-zinc-950 w-full text-neutral-50 flex flex-col justify-between">
+        <div className="min-h-screen bg-zinc-950 w-full text-neutral-50 flex flex-col justify-between gap-[200px]">
             <header className="flex justify-between items-center px-5 mt-8 md:px-15 md:mt-10">
                 <Logo />
                 <div className="flex gap-4 sm:gap-8">
@@ -18,7 +18,7 @@ export default function App() {
                 </div>
             </header>
             <main className="grid place-content-center p-4">
-                <div className="mb-[15vh]">
+                <div className="-mt-16 pb-16">
                     <h1 className="text-[1.75rem] leading-[1.3] md:text-[2.75rem] md:leading-[1.2] mb-12 text-transparent bg-clip-text bg-gradient-to-r from-white via-red-600 to-red-500">
                         Hi there, binge-watcher <br />
                         What playlist you want to calculate?
@@ -26,13 +26,13 @@ export default function App() {
                     <Form />
                 </div>
             </main>
-            <footer className="flex justify-center p-4 border-t-[1px] border-t-neutral-500">
-                <p className="text-center text-neutral-600">
+            <footer className="flex justify-center p-4 border-t-[1px] border-y-neutral-900">
+                <p className="text-center text-neutral-900">
                     Made by{" "}
                     <a
                         href="https://loix.vercel.app/"
                         target="_blank"
-                        className="text-neutral-200"
+                        className="text-neutral-800"
                     >
                         John Lois Floro
                     </a>
