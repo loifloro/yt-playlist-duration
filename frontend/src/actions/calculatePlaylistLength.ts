@@ -1,24 +1,17 @@
 "use server";
 
-import {
-    getPlaylist,
-    getPlaylistItems,
-    getPlaylistId,
-    getVideoDetails,
-    getVideoIds,
-    getPlaylistDuration,
-} from "../utils/playlist";
+import { getPlaylistId } from "../utils/playlist";
 import { isNull } from "lodash";
 import { Playlist } from "../types/playlist";
 
+type ApiResponse = {
+    details: Playlist;
+    imgUrl: string;
+    totalLength: number;
+};
+
 export default async function calculatePlaylistLength(
-    _previousState:
-        | undefined
-        | null
-        | {
-              playlist: Playlist;
-              totalLength: string;
-          },
+    _previousState: Nullable<ApiResponse>,
     formData: FormData
 ) {
     const playlistId = getPlaylistId(formData.get("playlistUrl"));
@@ -27,21 +20,15 @@ export default async function calculatePlaylistLength(
         return null;
     }
 
-    const playlist = await getPlaylist(playlistId);
+    const t = await fetch(
+        `${import.meta.env.VITE_API_SERVER}/api/playlist/${playlistId}`
+    );
 
-    if (isNull(playlist)) {
+    if (!t.ok) {
         return null;
     }
 
-    console.log(playlist);
+    const x: Nullable<ApiResponse> = await t.json();
 
-    return {
-        playlist,
-        imgUrl: playlist.snippet.thumbnails["maxres"].url,
-        totalLength: getPlaylistDuration(
-            await getVideoDetails(
-                getVideoIds(await getPlaylistItems(playlistId))
-            )
-        ),
-    };
+    return x;
 }
