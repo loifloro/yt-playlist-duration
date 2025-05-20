@@ -1,9 +1,7 @@
-import { Duration } from "luxon";
-
 type ResultProps = {
     title: string;
     description: string;
-    length: number;
+    length: string;
     imgUrl: string;
 };
 
@@ -13,8 +11,6 @@ export default function Result({
     length,
     imgUrl,
 }: ResultProps) {
-    const _length = Duration.fromMillis(length).rescale().toHuman();
-
     return (
         <div
             className="my-5 md:my-10 rounded-xl md:rounded-xl overflow-hidden h-fit w-fit lg:max-w-4xl"
@@ -28,7 +24,7 @@ export default function Result({
                 />
                 <div className="flex flex-col gap-6 md:gap-10">
                     <h2 className="text-xl md:text-2xl font-medium mb-2">
-                        {_length}
+                        {length}
                     </h2>
                     <div className="flex flex-col gap-1">
                         <h3 className="text-sm md:text-lg text-pretty">
