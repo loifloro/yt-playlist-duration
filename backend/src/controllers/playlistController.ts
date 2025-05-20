@@ -8,9 +8,9 @@ export const getPlaylistById = async (
     next: NextFunction
 ) => {
     try {
-        const playlist = await new Playlist({
-            id: req.params.playlistId,
-        }).init();
+        const playlist = new Playlist({ id: req.params.playlistId });
+
+        await playlist.create();
 
         if (isNull(playlist.details)) {
             res.status(400).json({ message: "No playlist found on this id" });

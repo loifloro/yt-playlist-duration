@@ -17,8 +17,8 @@ export class Playlist {
         this.id = playlistData.id;
     }
 
-    async init(): Promise<this> {
-        this.details = await this.getDetails(this.id);
+    async create() {
+        this.details = await this.getDetails();
 
         if (!isNull(this.details)) {
             this.playlistItems = await this.getPlaylistItems();
@@ -27,7 +27,7 @@ export class Playlist {
         return this;
     }
 
-    private async getDetails(id: string) {
+    private async getDetails() {
         const playlist = await fetch(
             `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&part=contentDetails&id=${this.id}&key=${process.env.API_KEY}`
         );
