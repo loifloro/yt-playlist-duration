@@ -3,6 +3,7 @@
 import { getPlaylistId } from "../utils/playlist";
 import { isNull } from "lodash";
 import { Playlist } from "../types/playlist";
+import { Nullable } from "../types";
 
 type ApiResponse = {
     details: Playlist;
