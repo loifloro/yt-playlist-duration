@@ -21,15 +21,23 @@ export default async function calculatePlaylistLength(
         return null;
     }
 
-    const t = await fetch(
-        `${import.meta.env.VITE_API_SERVER}/api/playlist/${playlistId}`
-    );
+    try {
+        const t = await fetch(
+            `${import.meta.env.VITE_API_SERVER}/api/playlist/${playlistId}`,
+            {
+                credentials: "same-origin",
+                method: "GET",
+            }
+        );
 
-    if (!t.ok) {
-        return null;
+        if (!t.ok) {
+            return null;
+        }
+
+        const x: Nullable<ApiResponse> = await t.json();
+
+        return x;
+    } catch (e) {
+        console.log(e);
     }
-
-    const x: Nullable<ApiResponse> = await t.json();
-
-    return x;
 }

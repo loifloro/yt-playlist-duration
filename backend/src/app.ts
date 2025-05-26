@@ -1,7 +1,10 @@
 import { errorHandler } from "./middleware/errorHandler";
 import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import playlistRoutes from "./routes/playlistRoutes";
+
+dotenv.config();
 
 const app = express();
 
