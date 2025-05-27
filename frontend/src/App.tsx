@@ -1,5 +1,4 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import Form from "./components/Form";
 import Logo from "./components/Logo";
 import ReactHookForm from "./usages/react-hook-form/ReactHookForm";
 

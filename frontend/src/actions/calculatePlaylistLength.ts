@@ -1,9 +1,9 @@
 "use server";
 
-import { ApiResponse } from "@types/api";
+import { ApiResponse } from "@typings/api";
 import { getPlaylistId } from "@utils/playlist";
 import { isNull } from "lodash";
-import { Nullable } from "@types/index";
+import { Nullable } from "@typings/index";
 
 export default async function calculatePlaylistLength(
     _previousState: Nullable<ApiResponse>,

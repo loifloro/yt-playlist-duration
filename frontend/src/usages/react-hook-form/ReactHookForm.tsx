@@ -1,9 +1,9 @@
-import { ApiResponse } from "@types/api";
+import { ApiResponse } from "@typings/api";
 import { Fragment, useState } from "react";
 import { getPlaylistId } from "@utils/playlist";
 import { isNil } from "lodash";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Nullable } from "@types/index";
+import { Nullable } from "@typings/index";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Result from "@components/Result";
 
