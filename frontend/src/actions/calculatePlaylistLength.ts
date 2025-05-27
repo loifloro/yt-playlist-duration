@@ -1,15 +1,9 @@
 "use server";
 
-import { getPlaylistId } from "../utils/playlist";
+import { ApiResponse } from "@types/api";
+import { getPlaylistId } from "@utils/playlist";
 import { isNull } from "lodash";
-import { Playlist } from "../types/playlist";
-import { Nullable } from "../types";
-
-type ApiResponse = {
-    details: Playlist;
-    imgUrl: string;
-    totalLength: number;
-};
+import { Nullable } from "@types/index";
 
 export default async function calculatePlaylistLength(
     _previousState: Nullable<ApiResponse>,

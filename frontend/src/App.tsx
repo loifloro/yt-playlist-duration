@@ -1,6 +1,7 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Form from "./components/Form";
 import Logo from "./components/Logo";
+import ReactHookForm from "./usages/react-hook-form/ReactHookForm";
 
 export default function App() {
     return (
@@ -23,12 +24,13 @@ export default function App() {
                         Hi there, binge-watcher <br />
                         What playlist you want to calculate?
                     </h1>
-                    <Form />
+                    <ReactHookForm />
+                    {/* <Form /> */}
                 </div>
             </main>
             <footer className="flex justify-center p-4 border-t-[1px] border-y-neutral-900">
                 <p className="text-center text-neutral-900">
-                    Made by{" "}
+                    Made by&nbsp;
                     <a
                         href="https://loix.vercel.app/"
                         target="_blank"

@@ -94,12 +94,18 @@ export class Playlist {
     }
 
     /**
-     * Returns the duration of a Youtube Playlist in milliseconds
+     * Returns the duration of a Youtube Playlist in different format
      *
      * @async
-     * @returns {Promise<number>}
+     * @returns {Promise<{inMilliseconds: number; inSeconds: string; inMinutes: string; inHours: string; inDays: string;}>}
      */
-    async getPlaylistDuration(): Promise<number> {
+    async getPlaylistDuration(): Promise<{
+        inMilliseconds: number;
+        inSeconds: string;
+        inMinutes: string;
+        inHours: string;
+        inDays: string;
+    }> {
         const videoIds = this.playlistItems?.map(
             (item) => item.snippet.resourceId.videoId
         );
@@ -109,10 +115,22 @@ export class Playlist {
             Duration.fromISO(video.contentDetails.duration).toMillis()
         );
 
-        return Duration.fromDurationLike(
+        const duration = Duration.fromDurationLike(
             videoDurations
                 .filter((item) => !isNaN(item))
                 .reduce((acc, duration) => acc + duration)
-        ).toMillis();
+        );
+
+        return {
+            inMilliseconds: duration.toMillis(),
+            inSeconds: duration.toFormat("s 'seconds'"),
+            inMinutes: duration.toFormat("mm 'minutes', ss 'seconds'"),
+            inHours: duration.toFormat(
+                "hh 'hours', mm 'minutes', ss 'seconds'"
+            ),
+            inDays: duration.toFormat(
+                "d 'days', hh 'hours', mm 'minutes', ss 'seconds'"
+            ),
+        };
     }
 }
