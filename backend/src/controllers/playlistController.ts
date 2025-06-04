@@ -22,13 +22,6 @@ export const getPlaylistById = async (
             return;
         }
 
-        bot.on("message", (msg) => {
-            const chatId = msg.chat.id;
-            const messageText = msg.text;
-
-            bot.sendMessage(chatId, "Welcome to the bot!");
-        });
-
         res.status(200).json({
             details: playlist.details,
             imgUrl: playlist.details?.snippet.thumbnails["maxres"].url,
