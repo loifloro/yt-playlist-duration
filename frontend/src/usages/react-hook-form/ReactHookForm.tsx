@@ -4,30 +4,40 @@ import { getPlaylistId } from "@utils/playlist";
 import { isNil } from "lodash";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Nullable } from "@typings/index";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Result from "@components/Result";
 import ResultSkeleton from "@components/ResultSkeleton";
 
-type FormProps = {
-    playlistUrl: string;
-};
+const schema = z.object({
+    playlistUrl: z.string().url("Invalid URL Playlist"),
+});
+
+type Schema = z.infer<typeof schema>;
 
 export default function ReactHookForm() {
     const [result, setResult] = useState<Nullable<ApiResponse>>();
     const [isLoading, setIsLoading] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const { register, handleSubmit } = useForm<FormProps>({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setError,
+    } = useForm<Schema>({
         defaultValues: {
             playlistUrl: !isNil(searchParams.get("url"))
                 ? searchParams.get("url")!
                 : "",
         },
+        resolver: zodResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<FormProps> = useCallback(
-        async (data) => {
+    const onSubmit = useCallback(
+        async (data: Schema) => {
             try {
                 setIsLoading(true);
 
@@ -45,6 +55,12 @@ export default function ReactHookForm() {
                 );
 
                 if (!result.ok) {
+                    const parsedResult: { message: string } =
+                        await result.json();
+
+                    setResult(null);
+                    setError("playlistUrl", { message: parsedResult.message });
+
                     return null;
                 }
 
@@ -53,14 +69,16 @@ export default function ReactHookForm() {
                 setResult(parsedResult);
 
                 return;
-            } catch (e) {
-                console.error(e);
+            } catch (e: unknown) {
+                console.log(e);
             } finally {
                 setIsLoading(false);
             }
         },
-        [setSearchParams]
+        [setSearchParams, setError]
     );
+
+    const hasError = errors.playlistUrl?.message;
 
     useEffect(() => {
         if (searchParams.has("url") && isNil(result)) {
@@ -78,12 +96,10 @@ export default function ReactHookForm() {
                     Paste the playlist link here
                 </label>
                 <form
-                    // className={`border focus-within:border-2 focus-within:border-zinc-300 overflow-hidden rounded-full h-12 bg-neutral-900/40 flex justify-between pl-4 w-full ${hasError ? "border-red-700" : "border-zinc-500 "}`}
-                    className={`border focus-within:border-2 focus-within:border-zinc-300 overflow-hidden rounded-full h-12 bg-neutral-900/40 flex justify-between pl-4 w-full`}
+                    className={`border focus-within:border-2 focus-within:border-zinc-300 overflow-hidden rounded-full h-12 bg-neutral-900/40 flex justify-between pl-4 w-full ${hasError ? "border-red-700 text-red-100" : "border-zinc-500 "}`}
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <input
-                        type="url"
                         required
                         className="playlist-url-input"
                         placeholder="https://www.youtube.com/playlist?list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1"
@@ -98,7 +114,7 @@ export default function ReactHookForm() {
                     </button>
                 </form>
                 <div className="text-red-700">
-                    {/* {hasError && <p>No playlist found on this URL</p>} */}
+                    {hasError && <p>{errors.playlistUrl?.message}</p>}
                 </div>
             </div>
             {isLoading && <ResultSkeleton />}

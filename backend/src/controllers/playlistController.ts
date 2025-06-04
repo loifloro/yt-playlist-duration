@@ -1,6 +1,7 @@
 import { isNull } from "lodash";
 import { Playlist } from "@models/playlist";
 import { Request, Response, NextFunction } from "express";
+import TelegramBot from "node-telegram-bot-api";
 
 export const getPlaylistById = async (
     req: Request,
@@ -9,6 +10,9 @@ export const getPlaylistById = async (
 ) => {
     try {
         const playlist = new Playlist({ id: req.params.playlistId });
+        const bot = new TelegramBot(process.env.TELEGRAM_BOT_API_TOKEN!, {
+            polling: true,
+        });
 
         await playlist.create();
 
@@ -17,6 +21,13 @@ export const getPlaylistById = async (
 
             return;
         }
+
+        bot.on("message", (msg) => {
+            const chatId = msg.chat.id;
+            const messageText = msg.text;
+
+            bot.sendMessage(chatId, "Welcome to the bot!");
+        });
 
         res.status(200).json({
             details: playlist.details,
