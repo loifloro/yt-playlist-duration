@@ -63,10 +63,10 @@ export default function ReactHookForm() {
     );
 
     useEffect(() => {
-        if (searchParams.has("url")) {
+        if (searchParams.has("url") && isNil(result)) {
             handleSubmit(onSubmit)();
         }
-    }, [onSubmit, handleSubmit, searchParams]);
+    }, [handleSubmit, onSubmit, result, searchParams]);
 
     return (
         <Fragment>
