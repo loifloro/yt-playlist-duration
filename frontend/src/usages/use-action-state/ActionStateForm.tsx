@@ -3,8 +3,8 @@
 import { isNull, isNil } from "lodash";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useActionState } from "react";
-import calculatePlaylistLength from "../actions/calculatePlaylistLength";
-import Result from "./Result";
+import calculatePlaylistLength from "@actions/calculatePlaylistLength";
+import Result from "@components/Result";
 
 export default function Form() {
     const [state, formAction] = useActionState(
@@ -47,8 +47,7 @@ export default function Form() {
             </div>
             {!isNil(state) && (
                 <Result
-                    title={state.details.snippet.title}
-                    description={state.details.snippet.description}
+                    details={state.details}
                     length={state.totalLength}
                     imgUrl={state.imgUrl}
                 />

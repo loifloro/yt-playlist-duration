@@ -1,11 +1,13 @@
 import { ApiResponse } from "@typings/api";
-import { Fragment, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { getPlaylistId } from "@utils/playlist";
 import { isNil } from "lodash";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Nullable } from "@typings/index";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSearchParams } from "react-router";
 import Result from "@components/Result";
+import ResultSkeleton from "@components/ResultSkeleton";
 
 type FormProps = {
     playlistUrl: string;
@@ -13,36 +15,58 @@ type FormProps = {
 
 export default function ReactHookForm() {
     const [result, setResult] = useState<Nullable<ApiResponse>>();
+    const [isLoading, setIsLoading] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const { register, handleSubmit } = useForm<FormProps>({
         defaultValues: {
-            playlistUrl: "",
+            playlistUrl: !isNil(searchParams.get("url"))
+                ? searchParams.get("url")!
+                : "",
         },
     });
 
-    const onSubmit: SubmitHandler<FormProps> = async (data) => {
-        try {
-            const result = await fetch(
-                `${import.meta.env.VITE_API_SERVER}/api/playlist/${getPlaylistId(data.playlistUrl)}`,
-                {
-                    credentials: "same-origin",
-                    method: "GET",
+    const onSubmit: SubmitHandler<FormProps> = useCallback(
+        async (data) => {
+            try {
+                setIsLoading(true);
+
+                setSearchParams((prevParams) => {
+                    prevParams.set("url", data.playlistUrl);
+                    return prevParams;
+                });
+
+                const result = await fetch(
+                    `${import.meta.env.VITE_API_SERVER}/api/playlist/${getPlaylistId(data.playlistUrl)}`,
+                    {
+                        credentials: "same-origin",
+                        method: "GET",
+                    }
+                );
+
+                if (!result.ok) {
+                    return null;
                 }
-            );
 
-            if (!result.ok) {
-                return null;
+                const parsedResult: Nullable<ApiResponse> = await result.json();
+
+                setResult(parsedResult);
+
+                return;
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setIsLoading(false);
             }
+        },
+        [setSearchParams]
+    );
 
-            const parsedResult: Nullable<ApiResponse> = await result.json();
-
-            setResult(parsedResult);
-
-            return;
-        } catch (e) {
-            console.log(e);
+    useEffect(() => {
+        if (searchParams.has("url")) {
+            handleSubmit(onSubmit)();
         }
-    };
+    }, [onSubmit, handleSubmit, searchParams]);
 
     return (
         <Fragment>
@@ -61,7 +85,7 @@ export default function ReactHookForm() {
                     <input
                         type="url"
                         required
-                        className="focus-visible:outline-0 bg-transparent text-neutral-100 placeholder:font-normal placeholder:text-zinc-600 w-full truncate"
+                        className="playlist-url-input"
                         placeholder="https://www.youtube.com/playlist?list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1"
                         autoComplete="off"
                         {...register("playlistUrl")}
@@ -77,10 +101,10 @@ export default function ReactHookForm() {
                     {/* {hasError && <p>No playlist found on this URL</p>} */}
                 </div>
             </div>
-            {!isNil(result) && (
+            {isLoading && <ResultSkeleton />}
+            {!isLoading && !isNil(result) && (
                 <Result
-                    title={result?.details.snippet.title}
-                    description={result?.details.snippet.description}
+                    details={result?.details}
                     length={result?.totalLength}
                     imgUrl={result?.imgUrl}
                 />
