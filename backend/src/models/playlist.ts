@@ -68,7 +68,7 @@ export class Playlist {
         return playlistItems;
     }
 
-    private async getVideoDetails(
+    async getVideoDetails(
         videoIds: string[],
         videoDetails: Video[] = [],
         currentIndex: number = 0
