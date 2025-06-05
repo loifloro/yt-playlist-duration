@@ -1,7 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
 @import "tailwindcss";
 
+
 body {
     font-family: "Geist", Roboto, Arial, sans-serif;
     background-color: var(--color-neutral-950);
+}
+
+@layer components {
+    .playlist-url-input {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background-color: transparent;
+
+        &:focus-visible {
+            outline: 0;
+        }
+
+    }
 }

@@ -17,10 +17,18 @@
 
         /* Linting */
         "strict": true,
-        "noUnusedLocals": true,
+        "noUnusedLocals": false,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-        "noUncheckedSideEffectImports": true
+        "noUncheckedSideEffectImports": true,
+
+        /* Paths */
+        "paths": {
+            "@components/*": ["./src/components/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@typings/*": ["./src/types/*"],
+            "@actions/*": ["./src/actions/*"]
+        }
     },
     "include": ["src"]
 }
