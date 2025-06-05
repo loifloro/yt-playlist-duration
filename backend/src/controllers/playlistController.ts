@@ -26,8 +26,6 @@ export const getPlaylistById = async (
             { parse_mode: "HTML" }
         );
 
-        res.status(200);
-
         res.status(200).json({
             details: playlist.details,
             imgUrl: playlist.details?.snippet.thumbnails["maxres"].url,
