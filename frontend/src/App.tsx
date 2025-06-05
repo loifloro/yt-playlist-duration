@@ -4,20 +4,6 @@ import ReactHookForm from "./usages/react-hook-form/ReactHookForm";
 
 import "react-loading-skeleton/dist/skeleton.css";
 
-export function meta() {
-    return [
-        { title: "Very cool app" },
-        {
-            property: "og:title",
-            content: "Very cool app",
-        },
-        {
-            name: "description",
-            content: "This app is the best",
-        },
-    ];
-}
-
 export default function App() {
     return (
         <div className="min-h-screen bg-zinc-950 w-full text-neutral-50 flex flex-col justify-between gap-[200px]">
