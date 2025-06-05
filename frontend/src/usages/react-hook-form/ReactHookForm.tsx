@@ -81,10 +81,10 @@ export default function ReactHookForm() {
     const hasError = errors.playlistUrl?.message;
 
     useEffect(() => {
-        if (searchParams.has("url") && isNil(result)) {
+        if (searchParams.has("url") && isNil(result) && !isLoading) {
             handleSubmit(onSubmit)();
         }
-    }, [handleSubmit, onSubmit, result, searchParams]);
+    }, [handleSubmit, onSubmit, result, searchParams, isLoading]);
 
     return (
         <Fragment>
