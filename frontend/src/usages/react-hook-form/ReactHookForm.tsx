@@ -1,7 +1,7 @@
 import { ApiResponse } from "@typings/api";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { getPlaylistId } from "@utils/playlist";
-import { isNil } from "lodash";
+import { isEmpty, isEqual, isNil } from "lodash";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Nullable } from "@typings/index";
 import { useForm } from "react-hook-form";
@@ -12,7 +12,31 @@ import Result from "@components/Result";
 import ResultSkeleton from "@components/ResultSkeleton";
 
 const schema = z.object({
-    playlistUrl: z.string().url("Invalid URL Playlist"),
+    playlistUrl: z
+        .string()
+        .url("Invalid Playlist URL")
+        .refine(
+            (val) => {
+                const _url = new URL(val);
+
+                return isEqual(
+                    _url.hostname.replace(/^www\./, ""),
+                    "youtube.com"
+                );
+            },
+            { message: "Invalid Playlist URL" }
+        )
+        .refine(
+            (val) => {
+                const _url = new URL(val);
+
+                return (
+                    _url.searchParams.has("list") ||
+                    !isEmpty(_url.searchParams.get("list"))
+                );
+            },
+            { message: "Invalid URL, no Playlist ID found" }
+        ),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -81,10 +105,10 @@ export default function ReactHookForm() {
     const hasError = errors.playlistUrl?.message;
 
     useEffect(() => {
-        if (searchParams.has("url") && isNil(result) && !isLoading) {
+        if (searchParams.has("url") && isNil(result) && !isLoading && !errors) {
             handleSubmit(onSubmit)();
         }
-    }, [handleSubmit, onSubmit, result, searchParams, isLoading]);
+    }, [handleSubmit, onSubmit, result, searchParams, isLoading, errors]);
 
     return (
         <Fragment>
