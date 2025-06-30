@@ -1,5 +1,5 @@
 import { isNull } from "lodash";
-import { Playlist } from "@models/playlist";
+import { Playlist } from "@services/playlistService";
 import { Request, Response, NextFunction } from "express";
 import { telegramBot } from "../telegramClient";
 
@@ -19,12 +19,19 @@ export const getPlaylistById = async (
             return;
         }
 
-        telegramBot.telegram.sendMessage(
-            process.env.TELEGRAM_CHAT_ID!,
-            `Recent Search: ${playlist.details.snippet.title}\n\nhttps://www.youtube.com/watch?v=${playlist.playlistItems![0].snippet.resourceId.videoId}=&list=${req.params.playlistId}
+        telegramBot.telegram
+            .sendMessage(
+                process.env.TELEGRAM_CHAT_ID!,
+                `Recent Search: ${playlist.details.snippet.title}\n\nhttps://www.youtube.com/watch?v=${playlist.playlistItems![0].snippet.resourceId.videoId}=&list=${req.params.playlistId}
             `,
-            { parse_mode: "HTML" }
-        );
+                { parse_mode: "HTML" }
+            )
+            .catch((err) => {
+                console.log(
+                    "Failed to send message:",
+                    err.response?.description || err.message
+                );
+            });
 
         res.status(200).json({
             details: playlist.details,
