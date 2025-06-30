@@ -117,7 +117,7 @@ export default function ReactHookForm() {
 
     return (
         <Fragment>
-            <div className="flex flex-col gap-1 justify-center w-full">
+            <div className="flex flex-col gap-1 justify-center w-full my-4">
                 <label
                     htmlFor="playlistUrl"
                     className="font-normal text-zinc-400"

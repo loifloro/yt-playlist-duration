@@ -91,39 +91,45 @@ export default function RecentSearch() {
     }
 
     return (
-        <motion.div ref={ref} className="my-20" animate={{ opacity: opacity }}>
-            <h3 className="mb-3 text-[1.25rem] leading-[1.3] md:text-[1.5rem] md:leading-[1.2]">
-                Recent Searches
-            </h3>
-            <div className="flex flex-col gap-6">
-                {isLoading
-                    ? Array.from({ length: 2 }, (_, index) => (
-                          <ResultSkeleton key={index} />
-                      ))
-                    : playlists.map(
-                          (
-                              {
-                                  numberOfVideos,
-                                  thumbnailUrl,
-                                  title,
-                                  description,
-                                  length,
-                                  redirectUrl,
-                              },
-                              index
-                          ) => (
-                              <PlaylistItem
-                                  redirectUrl={redirectUrl}
-                                  key={index}
-                                  imgUrl={thumbnailUrl}
-                                  length={getPlaylistLength(length)}
-                                  numberOfVideos={numberOfVideos}
-                                  title={title}
-                                  description={description}
-                              />
-                          )
-                      )}
-            </div>
-        </motion.div>
+        <div className="flex justify-center my-20 ">
+            <motion.div
+                ref={ref}
+                className="inline-block"
+                animate={{ opacity: opacity }}
+            >
+                <h3 className="mb-3 text-[1.25rem] leading-[1.3] md:text-[1.5rem] md:leading-[1.2]">
+                    Recent Searches
+                </h3>
+                <div className="flex flex-col gap-6">
+                    {isLoading
+                        ? Array.from({ length: 2 }, (_, index) => (
+                              <ResultSkeleton key={index} />
+                          ))
+                        : playlists.map(
+                              (
+                                  {
+                                      numberOfVideos,
+                                      thumbnailUrl,
+                                      title,
+                                      description,
+                                      length,
+                                      redirectUrl,
+                                  },
+                                  index
+                              ) => (
+                                  <PlaylistItem
+                                      redirectUrl={redirectUrl}
+                                      key={index}
+                                      imgUrl={thumbnailUrl}
+                                      length={getPlaylistLength(length)}
+                                      numberOfVideos={numberOfVideos}
+                                      title={title}
+                                      description={description}
+                                  />
+                              )
+                          )}
+                </div>
+            </motion.div>
+        </div>
     );
 }
