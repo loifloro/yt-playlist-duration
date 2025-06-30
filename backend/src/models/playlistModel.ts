@@ -25,6 +25,10 @@ const PlaylistSchema = new Schema(
             type: String,
             required: true,
         },
+        redirectUrl: {
+            type: String,
+            required: true,
+        },
         length: {
             inMilliseconds: Number,
             inSeconds: DurationMapSchema,
