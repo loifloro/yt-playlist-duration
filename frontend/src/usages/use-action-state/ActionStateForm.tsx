@@ -45,13 +45,13 @@ export default function Form() {
                     {hasError && <p>No playlist found on this URL</p>}
                 </div>
             </div>
-            {!isNil(state) && (
+            {/* {!isNil(state) && (
                 <Result
                     details={state.details}
                     length={state.totalLength}
                     imgUrl={state.imgUrl}
                 />
-            )}
+            )} */}
         </>
     );
 }
