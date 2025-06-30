@@ -89,14 +89,14 @@ function FilterDrawer({
     ];
 
     const speed: Array<{ label: string; speed: Speed }> = [
-        { label: "0.25", speed: ".25" },
-        { label: "0.5", speed: ".5" },
-        { label: "0.75", speed: ".75" },
+        { label: "0.25", speed: "025" },
+        { label: "0.5", speed: "050" },
+        { label: "0.75", speed: "075" },
         { label: "Normal", speed: "1" },
-        { label: "1.25", speed: "1.25" },
-        { label: "1.5", speed: "1.5" },
-        { label: "1.75", speed: "1.75" },
-        { label: "2", speed: "2" },
+        { label: "100", speed: "100" },
+        { label: "150", speed: "150" },
+        { label: "175", speed: "175" },
+        { label: "200", speed: "200" },
     ];
 
     useOnClickOutside<HTMLElement>(

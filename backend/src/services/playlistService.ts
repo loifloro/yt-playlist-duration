@@ -9,7 +9,7 @@ import {
 } from "@typings/playlist";
 import { Video } from "@typings/video";
 
-export class Playlist {
+export class PlaylistService {
     id: string;
     details: PlaylistType | null = null;
     playlistItems?: PlaylistItem[];
@@ -124,100 +124,102 @@ export class Playlist {
         return {
             inMilliseconds: duration.toMillis(),
             inSeconds: {
-                ".25": Duration.fromMillis(_duration / 0.25).toFormat(
+                "025": Duration.fromMillis(_duration / 0.25).toFormat(
                     "s 'seconds'"
                 ),
-                ".5": Duration.fromMillis(_duration / 0.5).toFormat(
+                "050": Duration.fromMillis(_duration / 0.5).toFormat(
                     "s 'seconds'"
                 ),
-                ".75": Duration.fromMillis(_duration / 0.75).toFormat(
+                "075": Duration.fromMillis(_duration / 0.75).toFormat(
                     "s 'seconds'"
                 ),
                 "1": duration.toFormat("s 'seconds'"),
-                "1.25": Duration.fromMillis(_duration / 1.25).toFormat(
+                "100": Duration.fromMillis(_duration / 1.25).toFormat(
                     "s 'seconds'"
                 ),
-                "1.5": Duration.fromMillis(_duration / 1.5).toFormat(
+                "150": Duration.fromMillis(_duration / 1.5).toFormat(
                     "s 'seconds'"
                 ),
-                "1.75": Duration.fromMillis(_duration / 1.75).toFormat(
+                "175": Duration.fromMillis(_duration / 1.75).toFormat(
                     "s 'seconds'"
                 ),
-                "2": Duration.fromMillis(_duration / 2).toFormat("s 'seconds'"),
+                "200": Duration.fromMillis(_duration / 2).toFormat(
+                    "s 'seconds'"
+                ),
             },
             inMinutes: {
-                ".25": Duration.fromMillis(_duration / 0.25).toFormat(
+                "025": Duration.fromMillis(_duration / 0.25).toFormat(
                     "mm 'minutes', ss 'seconds'"
                 ),
-                ".5": Duration.fromMillis(_duration / 0.5).toFormat(
+                "050": Duration.fromMillis(_duration / 0.5).toFormat(
                     "mm 'minutes', ss 'seconds'"
                 ),
-                ".75": Duration.fromMillis(_duration / 0.75).toFormat(
+                "075": Duration.fromMillis(_duration / 0.75).toFormat(
                     "mm 'minutes', ss 'seconds'"
                 ),
                 "1": duration.toFormat("mm 'minutes', ss 'seconds'"),
-                "1.25": Duration.fromMillis(_duration / 1.25).toFormat(
+                "100": Duration.fromMillis(_duration / 1.25).toFormat(
                     "mm 'minutes', ss 'seconds'"
                 ),
-                "1.5": Duration.fromMillis(_duration / 1.5).toFormat(
+                "150": Duration.fromMillis(_duration / 1.5).toFormat(
                     "mm 'minutes', ss 'seconds'"
                 ),
-                "1.75": Duration.fromMillis(_duration / 1.75).toFormat(
+                "175": Duration.fromMillis(_duration / 1.75).toFormat(
                     "mm 'minutes', ss 'seconds'"
                 ),
-                "2": Duration.fromMillis(_duration / 2).toFormat(
+                "200": Duration.fromMillis(_duration / 2).toFormat(
                     "mm 'minutes', ss 'seconds'"
                 ),
             },
             inHours: {
-                ".25": Duration.fromMillis(_duration / 0.25).toFormat(
+                "025": Duration.fromMillis(_duration / 0.25).toFormat(
                     "hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                ".5": Duration.fromMillis(_duration / 0.5).toFormat(
+                "050": Duration.fromMillis(_duration / 0.5).toFormat(
                     "hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                ".75": Duration.fromMillis(_duration / 0.75).toFormat(
+                "075": Duration.fromMillis(_duration / 0.75).toFormat(
                     "hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
                 "1": duration.toFormat(
                     "hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                "1.25": Duration.fromMillis(_duration / 1.25).toFormat(
+                "100": Duration.fromMillis(_duration / 1.25).toFormat(
                     "hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                "1.5": Duration.fromMillis(_duration / 1.5).toFormat(
+                "150": Duration.fromMillis(_duration / 1.5).toFormat(
                     "hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                "1.75": Duration.fromMillis(_duration / 1.75).toFormat(
+                "175": Duration.fromMillis(_duration / 1.75).toFormat(
                     "hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                "2": Duration.fromMillis(_duration / 2).toFormat(
+                "200": Duration.fromMillis(_duration / 2).toFormat(
                     "hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
             },
             inDays: {
-                ".25": Duration.fromMillis(_duration / 0.25).toFormat(
+                "025": Duration.fromMillis(_duration / 0.25).toFormat(
                     "d 'days', hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                ".5": Duration.fromMillis(_duration / 0.5).toFormat(
+                "050": Duration.fromMillis(_duration / 0.5).toFormat(
                     "d 'days', hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                ".75": Duration.fromMillis(_duration / 0.75).toFormat(
+                "075": Duration.fromMillis(_duration / 0.75).toFormat(
                     "d 'days', hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
                 "1": duration.toFormat(
                     "d 'days', hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                "1.25": Duration.fromMillis(_duration / 1.25).toFormat(
+                "100": Duration.fromMillis(_duration / 1.25).toFormat(
                     "d 'days', hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                "1.5": Duration.fromMillis(_duration / 1.5).toFormat(
+                "150": Duration.fromMillis(_duration / 1.5).toFormat(
                     "d 'days', hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                "1.75": Duration.fromMillis(_duration / 1.75).toFormat(
+                "175": Duration.fromMillis(_duration / 1.75).toFormat(
                     "d 'days', hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
-                "2": Duration.fromMillis(_duration / 2).toFormat(
+                "200": Duration.fromMillis(_duration / 2).toFormat(
                     "d 'days', hh 'hours', mm 'minutes', ss 'seconds'"
                 ),
             },

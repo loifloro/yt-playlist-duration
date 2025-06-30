@@ -89,14 +89,14 @@ export type PlaylistItems = {
 };
 
 export type PlaylistDurationPerTime = {
-    ".25": string;
-    ".5": string;
-    ".75": string;
+    "025": string;
+    "050": string;
+    "075": string;
     "1": string;
-    "1.25": string;
-    "1.5": string;
-    "1.75": string;
-    "2": string;
+    "100": string;
+    "150": string;
+    "175": string;
+    "200": string;
 };
 
 export type PlaylistDurationResponse = {

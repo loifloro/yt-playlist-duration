@@ -2,7 +2,7 @@
     "scripts": {
         "build": "tsc && tsc-alias",
         "start": "node dist/server.js",
-        "dev": "node --env-file=.env -r ts-node/register src/server.ts",
+        "dev": "node --watch --env-file=.env -r ts-node/register src/server.ts",
         "lint": "eslint 'src/**/*.ts'"
     },
     "devDependencies": {
@@ -26,6 +26,8 @@
         "cors": "^2.8.5",
         "lodash": "^4.17.21",
         "luxon": "^3.6.1",
+        "mongodb": "^6.17.0",
+        "mongoose": "^8.16.1",
         "telegraf": "^4.16.3"
     }
 }

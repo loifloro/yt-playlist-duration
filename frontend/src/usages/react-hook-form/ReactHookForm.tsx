@@ -105,7 +105,12 @@ export default function ReactHookForm() {
     const hasError = errors.playlistUrl?.message;
 
     useEffect(() => {
-        if (searchParams.has("url") && isNil(result) && !isLoading && !errors) {
+        if (
+            searchParams.has("url") &&
+            isNil(result) &&
+            !isLoading &&
+            isEmpty(errors)
+        ) {
             handleSubmit(onSubmit)();
         }
     }, [handleSubmit, onSubmit, result, searchParams, isLoading, errors]);
@@ -144,9 +149,10 @@ export default function ReactHookForm() {
             {isLoading && <ResultSkeleton />}
             {!isLoading && !isNil(result) && (
                 <Result
-                    details={result?.details}
-                    length={result?.totalLength}
-                    imgUrl={result?.imgUrl}
+                    redirectUrl={result.redirectUrl}
+                    details={result.details}
+                    length={result.totalLength}
+                    imgUrl={result.imgUrl}
                 />
             )}
         </Fragment>
