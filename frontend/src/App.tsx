@@ -3,6 +3,7 @@ import Logo from "./components/Logo";
 import ReactHookForm from "./usages/react-hook-form/ReactHookForm";
 
 import "react-loading-skeleton/dist/skeleton.css";
+import RecentSearch from "@components/RecentSearch";
 
 export default function App() {
     return (
@@ -26,6 +27,7 @@ export default function App() {
                         What playlist you want to calculate?
                     </h1>
                     <ReactHookForm />
+                    <RecentSearch />
                     {/* <Form /> */}
                 </div>
             </main>

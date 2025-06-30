@@ -3,14 +3,21 @@ import { Playlist, PlaylistDurationResponse } from "@typings/playlist";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import Filter from "./Filter";
+import PlaylistItem from "./PlaylistItem";
 
 type ResultProps = {
     details: Playlist;
     length: PlaylistDurationResponse;
+    redirectUrl: string;
     imgUrl: string;
 };
 
-export default function Result({ details, length, imgUrl }: ResultProps) {
+export default function Result({
+    details,
+    length,
+    imgUrl,
+    redirectUrl,
+}: ResultProps) {
     const [searchParams] = useSearchParams();
 
     const [timeFormat, setTimeFormat] = useState<TimeFormat>(() => {
@@ -61,47 +68,14 @@ export default function Result({ details, length, imgUrl }: ResultProps) {
     return (
         <div className="flex flex-col items-end my-5 gap-2">
             <Filter setTimeFormat={handleTimeFormat} setSpeed={handleSpeed} />
-            <div
-                style={{
-                    backgroundImage: `url(${imgUrl})`,
-                    backgroundSize: "100%",
-                    backgroundPosition: "center",
-                }}
-                className="rounded-2xl overflow-hidden h-fit w-full lg:w-[48.75rem] outline-2 outline-neutral-800 -outline-offset-[.5px]"
-            >
-                <div className="p-4 md:pb-8 md:p-6 backdrop-blur-xl bg-black/60 flex flex-wrap md:flex-nowrap flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
-                    <img
-                        src={imgUrl}
-                        alt={details.snippet.description}
-                        className="drop-shadow-lg object-cover md:w-80"
-                    />
-                    <div className="flex flex-col gap-6">
-                        <h2 className="text-xl md:text-2xl font-normal mb-2">
-                            {_length}
-                        </h2>
-                        <div>
-                            <div className="flex flex-col gap-4">
-                                <div className="flex flex-col gap-[2px]">
-                                    <h3 className="text-sm md:text-xl font-normal tracking-wide text-pretty">
-                                        {details.snippet.title}
-                                    </h3>
-                                    <p className="text-sm md:text-base w-fit text-zinc-300 line-clamp-2">
-                                        {details.snippet.description}
-                                    </p>
-                                </div>
-                                <div className="flex">
-                                    <span className="text-sm md:text-sm w-fit text-zinc-400">
-                                        {details.contentDetails.itemCount}
-                                        &nbsp;videos
-                                    </span>
-                                    {/* <span>•</span>
-                                    <span></span> */}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <PlaylistItem
+                redirectUrl={redirectUrl}
+                imgUrl={imgUrl}
+                length={_length}
+                numberOfVideos={details.contentDetails.itemCount}
+                title={details.snippet.title}
+                description={details.snippet.description}
+            />
         </div>
     );
 }
