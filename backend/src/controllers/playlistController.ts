@@ -35,7 +35,7 @@ export const getPlaylistById = async (
                 numberOfVideos: playlist.details.contentDetails.itemCount,
                 playlistId: playlist.id,
                 thumbnailUrl:
-                    playlist.details?.snippet.thumbnails["maxres"].url,
+                    playlist.details?.snippet.thumbnails["default"].url,
                 title: playlist.details.snippet.title,
                 length: await playlist.getPlaylistDuration(),
                 searchedAt: new Date(),
@@ -74,7 +74,9 @@ export const getPlaylists = async (
     next: NextFunction
 ) => {
     try {
-        const playlists = await Playlist.find();
+        const playlists = await Playlist.find()
+            .limit(10)
+            .sort({ searchedAt: "desc" });
 
         res.status(200).json(playlists);
     } catch (error) {

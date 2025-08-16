@@ -137,6 +137,7 @@ export default function ReactHookForm() {
                     />
                     <button
                         type="submit"
+                        aria-label="Calculate Playlist"
                         className="bg-neutral-800 h-full px-4 cursor-pointer"
                     >
                         <MagnifyingGlassIcon className="fill-neutral-50 h-6 w-6" />
