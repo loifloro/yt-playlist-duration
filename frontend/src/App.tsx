@@ -14,6 +14,7 @@ export default function App() {
                     <a
                         href="https://github.com/loifloro/yt-playlist-duration"
                         target="_blank"
+                        title="Github Repository"
                     >
                         <GitHubLogoIcon className="cursor-pointer h-6 w-6 sm:h-7 sm:w-7" />
                     </a>
@@ -32,12 +33,12 @@ export default function App() {
                 </div>
             </main>
             <footer className="flex justify-center p-4 border-t-[1px] border-y-neutral-900">
-                <p className="text-center text-neutral-900">
+                <p className="text-center text-neutral-700">
                     Made by&nbsp;
                     <a
                         href="https://loix.vercel.app/"
                         target="_blank"
-                        className="text-neutral-800"
+                        className="text-neutral-500"
                     >
                         John Lois Floro
                     </a>
