@@ -35,7 +35,7 @@ export const getPlaylistById = async (
                 numberOfVideos: playlist.details.contentDetails.itemCount,
                 playlistId: playlist.id,
                 thumbnailUrl:
-                    playlist.details?.snippet.thumbnails["default"].url,
+                    playlist.details?.snippet.thumbnails["maxres"].url,
                 title: playlist.details.snippet.title,
                 length: await playlist.getPlaylistDuration(),
                 searchedAt: new Date(),
